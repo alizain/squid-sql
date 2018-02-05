@@ -303,7 +303,7 @@ def run_query(table_loader, raw_query):
                 f'table:{new_table_name} has already been declared in this query, try using `as` to give it a distinct name'
             )
         if new_table_name != source_table_name:
-            new_table = new_table.apply_as_exp(from_query['as'])
+            new_table = new_table.apply_as_exp(new_table_name)
         used_table_names.append(new_table_name)
         tables.append(new_table)
 
