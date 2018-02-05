@@ -6,7 +6,7 @@ A toy SQL engine in Python
 
 Here is a summary of time spent on this:
   - Read the challenge, and spent **60 minutes** implementing an efficient version of it, before realizing that 3 hours won't be enough to complete that implementation.
-  - Came back to it two days later, and wrote this (naive) implementation in about **150 minutes (2.5 hours)**.
+  - Came back to it two days later, and wrote this (naive) implementation from scratch in about **150 minutes (2.5 hours)**.
   - Spent another **60 minutes** after that adding notes, running auto-formatters, having fun with the error messages, and making minimal superficial cleanups to the code with no changes in core logic (such as `if __name__ == "__main__":` or `SquidCLIError('...')`).
 
 ## Notes
