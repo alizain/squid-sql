@@ -21,6 +21,8 @@ The core construct is the `Table` class. When a CSV is first loaded, it is initi
 
 `ColumnConfig` is another important component of the app, and is the main reason why a Table can contain columns from many different tables. The `ColumnConfig` contains everything needed to determine which columns are from which table. Because the data-structure is immutable, we can use `_replace()` functions to easily handle `as` queries, as mentioned above.
 
+Finally, for memory efficiency, we're using references as much as possible. We're also using tuples everywhere (including namedtuples), because they're awesome data-structures. They're actually one of the reason why I prefer Python to JavaScript!
+
 At the moment, because this was a 3 hour exercise, we basically join all tables into one mega table before running any `where` or `select` queries. What this means is that if you `select` a table with `Table(N)` rows, and another table with `Table(M)` rows, you end up with a table that is `Table(M * N)` rows. If you `select` a third table with `Q` rows, you end up with a table that is `Table(M * N * Q)` rows. This shortcut makes the current implementation unbelievably straight-forward, but obviously very inefficient.
 
 Steps to make this implementation more efficient:
