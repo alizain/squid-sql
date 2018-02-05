@@ -17,5 +17,6 @@ Steps to make this implementation more efficient:
   - Which leads me to the next and interesting implementation of a SQL engine - lazy evaluation. Essentially, you wouldn't want to do any work, till you absolutely need to. So in Python, I'd take all the applicable `ColumnToLiteralWhere` functions, and bind them to `Table(N)`, which would return a lazily-evaluating generator that can yield rows. This generator can be used by a `TableToTable` class to handle `ColumnToColumnWhere` queries, which itself is a generator, that can be used by the `select` query engine. So as the client requests a new row to display, the various connected generators yield a new row that matches all the required queries. If I had the time, this would be a fun implementation to write.
   - At some point, I'd move the querying/filtering logic into their own classes, that essentially can take as input one or more tables, a series of where queries, and optional indexes, and then return a generator that yields matching rows as required.
 
-**Also, this implementation has been cleaned with `yapf`**
+**This implementation has been cleaned with `yapf`**
+
 I believe consistently formatted code is important when working in a team, and therefore use a formatter for my own code often. This helps to make the code better as well, because if the formatter produces a gnarly line, it's an indicator that the line should be re-written to be made simpler/easier-to-read.
