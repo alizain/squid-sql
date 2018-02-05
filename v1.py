@@ -26,6 +26,7 @@ class SquidCLIError(SquidError):
 
 
 SUPPORTED_COLUMN_TYPES = ['int', 'str']
+SUPPORTED_COLUMN_TYPES_TEXT = ', '.join(SUPPORTED_COLUMN_TYPES)
 SUPPORTED_OPS_BY_COLUMN_TYPE = {
     'int': ['=', '!=', '>', '>=', '<', '<='],
     'str': ['=', '!='],
@@ -245,6 +246,10 @@ class Table:
     def validate_and_construct_col_configs(table_name, raw_columns):
         columns = []
         for index, [col_name, col_type] in enumerate(raw_columns):
+            if col_type not in SUPPORTED_COLUMN_TYPES:
+                raise SquidError(
+                    f'unsupported column_type of:{col_type}, only [ {SUPPORTED_COLUMN_TYPES_TEXT} ] are allowed'
+                )
             col_config = ColumnConfig(
                 name=col_name, type=col_type, table=table_name, index=index)
             columns.append(col_config)
