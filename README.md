@@ -1,4 +1,16 @@
-# Notes
+# Squid SQL
+
+A toy SQL engine in Python
+
+## Timing
+
+Here is a summary of time spent on this:
+  - Read the challenge, and spent **45 minutes** implementing an efficient version of it, before realizing that 3 hours won't be enough to complete that implementation.
+  - Came back to it two days later, and wrote this (naive) implementation in about **150 minutes (2.5 hours)**.
+  - Spent another **45 minutes** after that adding notes, running auto-formatters, having fun with the error messages, and making minimal superficial cleanups to the code with no changes in core logic (such as `if __name__ == "__main__":` or `SquidCLIError('...')`).
+
+## Notes
+
 
 The basic structure of this implementation is:
   1. run the `from` queries, to get the required tables

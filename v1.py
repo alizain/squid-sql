@@ -190,33 +190,30 @@ class Table:
 
     def apply_select_queries(self, raw_select_queries):
         found_columns = []
-        found_column_names = []
+        found_names_by_col = {}
         for select_query in raw_select_queries:
             column_ref = select_query['source']['column']
             col_config = self.col_config_by_column_ref(column_ref)
             col_name = col_config.name
             if select_query['as']:
                 col_name = select_query['as']
-            if col_name in found_column_names:
+            if col_name in found_names_by_col.values():
                 raise SquidError(
                     f'column as:{col_name} already `select`ed in this query, please use a unique name'
                 )
-            col_config = col_config._replace(name=col_name)
-            found_column_names.append(col_name)
+            found_names_by_col[col_config] = col_name
             found_columns.append(col_config)
-        new_rows = self.filter_rows_for_columns(found_columns)
+        found_indexes = tuple(col_config.index for col_config in found_columns)
+        new_rows = self.filter_rows_by_column_indexes(found_indexes)
         new_columns = tuple(
-            col_config._replace(index=index)
-            for index, col_config in enumerate(found_columns))
+            col_config._replace(index=i, name=found_names_by_col[col_config])
+            for i, col_config in enumerate(found_columns))
         return self.__class__(new_columns, new_rows)
 
-    def filter_rows_for_columns(self, columns_to_include):
+    def filter_rows_by_column_indexes(self, indexes_to_include):
         new_rows = []
         for existing_row in self.rows:
-            row = []
-            for col in columns_to_include:
-                val = existing_row[col.index]
-                row.append(val)
+            row = [existing_row[i] for i in indexes_to_include]
             new_rows.append(row)
         return new_rows
 
